@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Review Sentiment Analyzer | Naive Bayes Demo</title>
+  <meta name="description" content="Type any movie review and a Naive Bayes model trained on 50,000 IMDB reviews classifies it as positive or negative.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <main class="container">
+    <header class="hero">
+      <span class="badge" id="model-badge">Loading model…</span>
+      <h1>Movie Review <span class="grad">Sentiment</span> Analyzer</h1>
+      <p class="sub">Input: any English sentence &rarr; Output: <b>positive</b> or <b>negative</b> with probability.</p>
+    </header>
+
+    <section class="card" aria-labelledby="in-title">
+      <h2 id="in-title" class="card-title">Your text</h2>
+      <textarea id="text-input" maxlength="5000" rows="5"
+        placeholder="e.g. A wonderful little production, the acting was superb!"></textarea>
+      <div class="row">
+        <span id="counter" class="muted">0 / 5000</span>
+        <div class="actions">
+          <button id="clear-btn" class="btn ghost" type="button">Clear</button>
+          <button id="analyze-btn" class="btn primary" type="button">Analyze sentiment</button>
+        </div>
+      </div>
+      <div class="examples">
+        <span class="muted">Try:</span>
+        <button class="chip" type="button" data-text="This movie was absolutely fantastic, I loved every minute of it!">😍 Positive</button>
+        <button class="chip" type="button" data-text="Terrible plot, awful acting. A complete waste of my time.">😡 Negative</button>
+        <button class="chip" type="button" data-text="It was not good at all, I would not recommend it.">🙅 Negation</button>
+      </div>
+    </section>
+
+    <p id="error" class="error" role="alert" hidden></p>
+
+    <section id="result" class="card result" aria-live="polite" hidden>
+      <div class="verdict">
+        <div id="emoji" class="emoji" aria-hidden="true"></div>
+        <div>
+          <div class="muted">Prediction</div>
+          <div id="label" class="label"></div>
+        </div>
+      </div>
+
+      <div class="bars">
+        <div class="bar-row">
+          <span>Positive</span>
+          <div class="track"><div id="bar-pos" class="fill pos"></div></div>
+          <span id="pct-pos" class="pct"></span>
+        </div>
+        <div class="bar-row">
+          <span>Negative</span>
+          <div class="track"><div id="bar-neg" class="fill neg"></div></div>
+          <span id="pct-neg" class="pct"></span>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>Words pushing <span class="pos-t">positive</span></h3>
+          <ul id="top-pos" class="tags"></ul>
+        </div>
+        <div>
+          <h3>Words pushing <span class="neg-t">negative</span></h3>
+          <ul id="top-neg" class="tags"></ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>Preprocessed text the model actually saw</summary>
+        <p id="cleaned" class="cleaned"></p>
+      </details>
+    </section>
+
+    <footer class="muted foot">Model: TF-IDF (1–2 grams) + Multinomial Naive Bayes · trained on IMDB Dataset (50k reviews)</footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
